@@ -2,7 +2,6 @@
 #define PWM_P 4
 #define EN1_P 6
 #define EN2_P 8
-#define PUMP_TIME 5650
 #define PUMP_SPEED 200
 
 void setup() {
@@ -28,19 +27,15 @@ void loop() {
   
   if(Serial.available()){
 
-    //dir = Serial.parseInt();
     t = Serial.parseInt();
 
-    /*digitalWrite(EN1_P, dir & 1);
-    digitalWrite(EN2_P, (dir >> 1) & 1);*/
-    
     digitalWrite(EN1_P, 1);
     
     analogWrite(PWM_P, PUMP_SPEED);
 
     tnow = millis();
 
-    Serial.print("\nEnter direction (0/1/2) and speed (0-255): ");      
+    Serial.print("\nEnter time (ms): ");  
 
     while(Serial.available()){
       Serial.read();
@@ -50,7 +45,6 @@ void loop() {
   }
 
   if(tnow + t < millis() && flag){
-    Serial.print("*");
     flag = false;
     digitalWrite(EN1_P, 0);
     digitalWrite(EN2_P, 0);
